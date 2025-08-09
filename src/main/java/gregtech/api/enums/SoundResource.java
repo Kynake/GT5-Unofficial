@@ -107,6 +107,9 @@ public enum SoundResource {
     GT_MAINTENANCE_DRONE_DOWNLINK_HATCH(274, GregTech.ID, "maintenance.MaintenanceDroneDownLinkHatch"),
     GT_MAINTENANCE_CREATIVE_HATCH(275, GregTech.ID, "maintenance.MaintenanceCreativeHatch"),
 
+    GT_MAINTENANCE_TEST_DUCT_TAPE_1(276, GregTech.ID, "maintenance.TestDuctTape1"),
+    GT_MAINTENANCE_TEST_DUCT_TAPE_2(277, GregTech.ID, "maintenance.TestDuctTape2"),
+
     GUI_BUTTON_DOWN(-1, GregTech.ID, "gui.buttonDown"),
     GUI_BUTTON_UP(-1, GregTech.ID, "gui.buttonUp"),
 

@@ -493,5 +493,23 @@
       "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "license_name": "CC0 1.0 Universal"
     }
+  },
+  "maintenance.TestDuctTape1": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "TestDuctTape1",
+        "stream": false
+      }
+    ]
+  },
+  "maintenance.TestDuctTape2": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "TestDuctTape2",
+        "stream": false
+      }
+    ]
   }
 }
