@@ -22,6 +22,10 @@ import tectech.util.CommonValues;
 
 public class MTEHatchCreativeMaintenance extends MTEHatchMaintenance {
 
+    private static int soundCount = 0;
+    private static final SoundResource[] maintSounds = { SoundResource.GT_MAINTENANCE_CREATIVE_HATCH,
+        SoundResource.GT_MAINTENANCE_TEST_CREATIVE_TAPE_1, SoundResource.GT_MAINTENANCE_TEST_CREATIVE_TAPE_2, };
+
     private static Textures.BlockIcons.CustomIcon face;
 
     public MTEHatchCreativeMaintenance(int aID, String aName, String aNameRegional, int aTier) {
@@ -78,7 +82,11 @@ public class MTEHatchCreativeMaintenance extends MTEHatchMaintenance {
 
     @Override
     public void onMaintenancePerformed(MTEMultiBlockBase aMaintenanceTarget) {
-        setMaintenanceSound(SoundResource.GT_MAINTENANCE_CREATIVE_HATCH, 1.0F, 1.0F);
+        SoundResource sound = maintSounds[soundCount];
+
+        soundCount = (soundCount + 1) % maintSounds.length;
+
+        setMaintenanceSound(sound, 1.0F, 1.0F);
         super.onMaintenancePerformed(aMaintenanceTarget);
     }
 

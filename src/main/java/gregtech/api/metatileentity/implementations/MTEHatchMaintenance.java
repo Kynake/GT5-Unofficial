@@ -59,9 +59,9 @@ import ic2.core.item.ItemToolbox;
 public class MTEHatchMaintenance extends MTEHatch implements IAddUIWidgets, IAlignment {
 
     private static int ductTapeCount = 0;
-    private static final SoundResource[] ductTapeSounds = { SoundResource.GT_MAINTENANCE_TEST_DUCT_TAPE_1,
-        SoundResource.GT_MAINTENANCE_TEST_DUCT_TAPE_1_SHORT, SoundResource.GT_MAINTENANCE_TEST_DUCT_TAPE_2,
-        SoundResource.GT_MAINTENANCE_TEST_DUCT_TAPE_2_SHORT };
+    private static final SoundResource[] ductTapeSounds = { SoundResource.GT_MAINTENANCE_DUCT_TAPE,
+        SoundResource.GT_MAINTENANCE_TEST_DUCT_TAPE_1, SoundResource.GT_MAINTENANCE_TEST_DUCT_TAPE_1_SHORT,
+        SoundResource.GT_MAINTENANCE_TEST_DUCT_TAPE_2, SoundResource.GT_MAINTENANCE_TEST_DUCT_TAPE_2_SHORT };
 
     private Rotation rotation = Rotation.NORMAL;
 
