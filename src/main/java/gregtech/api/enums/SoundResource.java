@@ -109,6 +109,10 @@ public enum SoundResource {
 
     GT_MAINTENANCE_TEST_DUCT_TAPE_1(276, GregTech.ID, "maintenance.TestDuctTape1"),
     GT_MAINTENANCE_TEST_DUCT_TAPE_2(277, GregTech.ID, "maintenance.TestDuctTape2"),
+    GT_MAINTENANCE_TEST_DUCT_TAPE_1_SHORT(278, GregTech.ID, "maintenance.TestDuctTape1Short"),
+    GT_MAINTENANCE_TEST_DUCT_TAPE_2_SHORT(279, GregTech.ID, "maintenance.TestDuctTape2Short"),
+    GT_MAINTENANCE_TEST_CREATIVE_TAPE_1(280, GregTech.ID, "maintenance.TestCreativeTape1"),
+    GT_MAINTENANCE_TEST_CREATIVE_TAPE_2(281, GregTech.ID, "maintenance.TestCreativeTape2"),
 
     GUI_BUTTON_DOWN(-1, GregTech.ID, "gui.buttonDown"),
     GUI_BUTTON_UP(-1, GregTech.ID, "gui.buttonUp"),

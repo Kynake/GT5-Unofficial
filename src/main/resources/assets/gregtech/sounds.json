@@ -503,11 +503,47 @@
       }
     ]
   },
+  "maintenance.TestDuctTape1Short": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "TestDuctTape1Short",
+        "stream": false
+      }
+    ]
+  },
   "maintenance.TestDuctTape2": {
     "category": "block",
     "sounds": [
       {
         "name": "TestDuctTape2",
+        "stream": false
+      }
+    ]
+  },
+  "maintenance.TestDuctTape2Short": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "TestDuctTape2Short",
+        "stream": false
+      }
+    ]
+  },
+  "maintenance.TestCreativeTape1": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "TestCreativeTape1",
+        "stream": false
+      }
+    ]
+  },
+  "maintenance.TestCreativeTape2": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "TestCreativeTape2",
         "stream": false
       }
     ]

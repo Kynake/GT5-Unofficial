@@ -59,6 +59,9 @@ import ic2.core.item.ItemToolbox;
 public class MTEHatchMaintenance extends MTEHatch implements IAddUIWidgets, IAlignment {
 
     private static int ductTapeCount = 0;
+    private static final SoundResource[] ductTapeSounds = { SoundResource.GT_MAINTENANCE_TEST_DUCT_TAPE_1,
+        SoundResource.GT_MAINTENANCE_TEST_DUCT_TAPE_1_SHORT, SoundResource.GT_MAINTENANCE_TEST_DUCT_TAPE_2,
+        SoundResource.GT_MAINTENANCE_TEST_DUCT_TAPE_2_SHORT };
 
     private Rotation rotation = Rotation.NORMAL;
 
@@ -417,15 +420,9 @@ public class MTEHatchMaintenance extends MTEHatch implements IAddUIWidgets, IAli
     private void applyDuctTape() {
         mWrench = mScrewdriver = mSoftMallet = mHardHammer = mCrowbar = mSolderingTool = true;
 
-        int count = ductTapeCount % 3;
-        ductTapeCount++;
+        SoundResource sound = ductTapeSounds[ductTapeCount];
 
-        SoundResource sound = SoundResource.GT_MAINTENANCE_DUCT_TAPE;
-        if (count == 1) {
-            sound = SoundResource.GT_MAINTENANCE_TEST_DUCT_TAPE_1;
-        } else if (count == 2) {
-            sound = SoundResource.GT_MAINTENANCE_TEST_DUCT_TAPE_2;
-        }
+        ductTapeCount = (ductTapeCount + 1) % ductTapeSounds.length;
 
         setMaintenanceSound(sound, 1.0F, 1.0F);
         getBaseMetaTileEntity().setActive(false);
