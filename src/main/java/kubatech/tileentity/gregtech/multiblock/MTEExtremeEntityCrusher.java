@@ -579,42 +579,82 @@ public class MTEExtremeEntityCrusher extends KubaTechGTMultiBlockBase<MTEExtreme
             if (recipe.recipe.alwaysinfernal && getMaxInputEu() < recipe.mEUt * 8)
                 return CheckRecipeResultRegistry.insufficientPower(recipe.mEUt * 8);
 
-            double attackDamage = DIAMOND_SPIKES_DAMAGE; // damage from spikes
-
-            if (weaponCache.isValid) attackDamage += weaponCache.attackDamage;
+            int tBatchMultiplier = batchMode ? 16 : 1;
+            double tAttackDamage = DIAMOND_SPIKES_DAMAGE;
+            int tLootingLevel = 0;
+            boolean tIsOnLastHit = false;
 
             if (EECPlayer == null) EECPlayer = new EECFakePlayer(this);
-            EECPlayer.currentWeapon = weaponCache.getStackInSlot(0);
+            int tRuns = this.calculatePerfectOverclock(this.lEUt, this.mMaxProgresstime);
+
+            // Test weapon damage application before using it
+            // If the weapon would break in the next run, move to the output instead.
+            // Otherwise, record extra damage and looting.
+            ItemStack tWeapon = weaponCache.getStackInSlot(0);
+            if (weaponCache.isValid) {
+                if (tWeapon.isItemStackDamageable()) {
+                    boolean tWeaponWouldBreak = false;
+                    ItemStack tWeaponCopy = tWeapon.copy();
+                    Item lootingHolderItem = tWeaponCopy.getItem();
+
+                    int tDamageTestRuns = (tRuns + 1);
+                    for (int i = 0; i < tDamageTestRuns; i++) {
+                        if (!lootingHolderItem.hitEntity(tWeaponCopy, recipe.recipe.entity, EECPlayer)) break;
+                        if (tWeaponCopy.stackSize == 0) {
+                            tWeaponWouldBreak = true;
+                            break;
+                        }
+                    }
+                    if (tWeaponWouldBreak) {
+                        // Try to move weapon to an output hatch
+                        if (addOutputPartial(tWeapon, false)) {
+                            weaponCache.setStackInSlot(0, null);
+                        }
+
+                        // Even if no output bus was able to receive the weapon, because it's about
+                        // to break, we still prevent it from being used during the next run.
+                        tWeapon = null;
+
+                    } else {
+                        weaponCache.setStackInSlot(0, tWeaponCopy);
+                        tWeapon = tWeaponCopy;
+                        tAttackDamage += weaponCache.attackDamage;
+                        tLootingLevel = weaponCache.looting;
+
+                        ItemStack tLastHitWeapon = tWeaponCopy.copy();
+                        tIsOnLastHit = tLastHitWeapon.getItem()
+                            .hitEntity(tLastHitWeapon, recipe.recipe.entity, EECPlayer)
+                            && tLastHitWeapon.stackSize == 0;
+                    }
+
+                } else {
+                    tAttackDamage += weaponCache.attackDamage;
+                    tLootingLevel = weaponCache.looting;
+                }
+            }
+
+            EECPlayer.currentWeapon = tWeapon;
             this.mOutputItems = recipe.generateOutputs(
                 rand,
                 this,
-                attackDamage,
-                weaponCache.isValid ? weaponCache.looting : 0,
+                tAttackDamage,
+                tLootingLevel,
                 mIsProducingInfernalDrops,
                 voidAllDamagedAndEnchantedItems);
-
             EECPlayer.currentWeapon = null;
+
+            // Only apply batch mode multiplication after output calculation
             if (batchMode) {
                 for (ItemStack item : mOutputItems) {
-                    item.stackSize *= 16;
+                    item.stackSize *= tBatchMultiplier;
                 }
-                this.mMaxProgresstime *= 16;
+                this.mMaxProgresstime *= tBatchMultiplier;
             }
-            this.mOutputFluids = new FluidStack[] {
-                FluidRegistry.getFluidStack("xpjuice", 120 * (batchMode ? 16 : 1)) };
-            ItemStack weapon = weaponCache.getStackInSlot(0);
-            int times = this.calculatePerfectOverclock(this.lEUt, this.mMaxProgresstime);
-            if (weaponCache.isValid && weapon.isItemStackDamageable()) {
-                EECPlayer.currentWeapon = weapon;
-                Item lootingHolderItem = weapon.getItem();
-                for (int i = 0; i < times + 1; i++) {
-                    if (!lootingHolderItem.hitEntity(weapon, recipe.recipe.entity, EECPlayer)) break;
-                    if (weapon.stackSize == 0) {
-                        weaponCache.setStackInSlot(0, null);
-                        break;
-                    }
-                }
-                EECPlayer.currentWeapon = null;
+
+            this.mOutputFluids = new FluidStack[] { FluidRegistry.getFluidStack("xpjuice", 120 * tBatchMultiplier) };
+
+            if (tIsOnLastHit && addOutputPartial(tWeapon, false)) {
+                weaponCache.setStackInSlot(0, null);
             }
         }
         if (this.lEUt > 0) this.lEUt = -this.lEUt;
