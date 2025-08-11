@@ -597,7 +597,7 @@ public class MTEExtremeEntityCrusher extends KubaTechGTMultiBlockBase<MTEExtreme
                     ItemStack tWeaponCopy = tWeapon.copy();
                     Item lootingHolderItem = tWeaponCopy.getItem();
 
-                    int tDamageTestRuns = (tRuns + 1);
+                    int tDamageTestRuns = (tRuns + 1) * tBatchMultiplier;
                     for (int i = 0; i < tDamageTestRuns; i++) {
                         if (!lootingHolderItem.hitEntity(tWeaponCopy, recipe.recipe.entity, EECPlayer)) break;
                         if (tWeaponCopy.stackSize == 0) {
